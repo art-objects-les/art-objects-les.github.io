@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кольцо</title>
+<style>
+@font-face{font-family:'BNP';src:url(/assets/bnp-rg.ttf) format('truetype');font-weight:400}
+@font-face{font-family:'BNP';src:url(/assets/bnp-md.ttf) format('truetype');font-weight:500}
+@font-face{font-family:'HEAD';src:url(/assets/unb-cyr.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'HEAD';src:url(/assets/unb-lat.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:'PLAYFAIR';font-style:italic;font-weight:400 900;src:url(/assets/playfair-italic.ttf) format('truetype')}
+
+:root{--bg:#2D2920;--green:#3E482A;--olive:#79804D;--brown:#69573B;--txt:#E6E0D2;--mute:#A9A08C;--rule:#4A4434}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font-family:'BNP',sans-serif;font-weight:400;font-size:19px;line-height:1.16;letter-spacing:-0.05em}
+a{color:var(--txt)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:1px solid var(--olive);outline-offset:4px}
+.w{max-width:1160px;margin:0 auto;padding:0 32px}
+p{margin:0 0 .9em;max-width:52ch}
+h1{font-family:'HEAD';font-weight:400;font-size:clamp(64px,11vw,150px);line-height:.85;margin:0;letter-spacing:-0.05em}
+h2{font-family:'HEAD';font-weight:400;font-size:clamp(30px,4vw,50px);line-height:.95;margin:0 0 30px;letter-spacing:-0.05em}
+h3{font-family:'HEAD';font-weight:400;font-size:14px;line-height:1.05;margin:0 0 10px;color:var(--olive);letter-spacing:-0.02em}
+.top{padding:64px 32px 40px;display:grid;grid-template-columns:1fr auto;align-items:end;gap:24px;border-bottom:1px solid var(--rule)}
+.top .sub{font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.045em;font-size:32px;line-height:.8;max-width:none;white-space:nowrap;color:var(--olive);text-align:left}
+section{padding:72px 0;border-bottom:1px solid var(--rule)}
+.fig svg{display:block;width:100%;height:auto}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.lead{font-size:28px;line-height:1.02;max-width:30ch}
+.ins{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ins img{display:block;width:100%;height:auto;filter:grayscale(.2)}
+.ins figcaption{line-height:1.1;font-size:15px;color:var(--mute);margin-top:10px}
+.quote{font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.045em;font-size:clamp(28px,3vw,40px);line-height:.95;max-width:24ch;margin:0 0 32px;padding-bottom:8px;color:var(--txt)}
+.ph{display:grid;grid-template-columns:220px 1fr;gap:20px 48px;margin-top:8px}
+.ph h3{margin:3px 0 0}
+.ph p{margin:0 0 30px}
+.ctrl{display:flex;align-items:center;gap:16px;margin:22px 0 6px;font-size:17px}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;max-width:460px;height:1px;background:var(--mute)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--txt)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:50%;background:var(--txt)}
+.note{font-size:16px;color:var(--mute)}
+.techlink{display:inline-block;font-family:'HEAD';letter-spacing:-0.04em;font-size:20px;text-decoration:none;border-bottom:1px solid var(--olive);padding-bottom:4px}
+#tech{display:none;padding:56px 0 100px}#tech.on{display:block}#main.off{display:none}
+#tech table{width:100%;border-collapse:collapse;margin-top:28px;font-size:18px}
+#tech td{padding:14px 16px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+#tech td:first-child{width:230px;color:var(--olive)}
+#tech td:last-child{color:var(--mute)}
+#tech ul{max-width:60ch;padding-left:1.1em}#tech li{margin-bottom:8px;color:var(--mute)}
+.back{font-size:18px;text-decoration:none;display:inline-block;margin-bottom:36px;color:var(--mute)}
+footer{padding:36px 0 70px;font-size:14px;color:var(--mute)}
+@media (max-width:820px){.grid2,.ins,.ph{grid-template-columns:1fr;gap:20px}.top{grid-template-columns:1fr}.top .sub{font-size:24px}.slider{padding:16px}.ph p{margin-bottom:18px}}
+
+.acc{margin-top:8px;border-top:1px solid var(--rule)}
+details{border-bottom:1px solid var(--rule)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;padding:22px 0;font-family:'HEAD';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.05em;line-height:1}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';font-family:'BNP';font-size:32px;color:var(--olive);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+summary:hover{color:var(--olive)}
+.dbody{padding:0 0 30px;max-width:640px}
+.dbody h4{font-family:'HEAD';font-weight:400;font-size:14px;letter-spacing:-0.02em;color:var(--olive);margin:18px 0 6px;line-height:1.05}
+.dbody p{margin:0 0 .7em}
+.dbody table{width:100%;border-collapse:collapse;font-size:17px}
+.dbody td{padding:10px 14px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.dbody td:first-child{width:170px;color:var(--olive)}
+.dbody td:last-child{color:var(--mute)}
+.dbody ul{padding-left:1.1em;margin:0}.dbody li{margin-bottom:6px;color:var(--mute)}
+.stage{font-size:28px;line-height:1;margin-top:10px}
+
+.slider{margin-top:26px;padding:22px 24px;border:1px solid var(--olive);border-radius:4px;max-width:720px}
+.slider .hint{font-family:'HEAD';font-size:15px;letter-spacing:-0.03em;color:var(--olive);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.slider .hint .arr{display:inline-block}
+.slider .ctrl{margin:0}
+.slider input[type=range]{height:4px;background:linear-gradient(90deg,#8C8E8A,#C0703A 20%,#86593A 55%,#69573B);border-radius:2px;max-width:none}
+.slider input[type=range]::-webkit-slider-thumb{width:28px;height:28px;border:3px solid var(--bg);box-shadow:0 0 0 2px var(--txt);cursor:grab}
+.slider input[type=range]::-moz-range-thumb{width:24px;height:24px;border:3px solid var(--bg);box-shadow:0 0 0 2px var(--txt);cursor:grab}
+@media (prefers-reduced-motion:no-preference){
+.slider:not(.touched) input[type=range]::-webkit-slider-thumb{animation:pulse 1.6s ease-out infinite}
+.slider:not(.touched) .arr{animation:nudge 1.2s ease-in-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 2px var(--txt),0 0 0 2px rgba(121,128,77,.9)}100%{box-shadow:0 0 0 2px var(--txt),0 0 0 18px rgba(121,128,77,0)}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}}
+.slider.touched .hint{color:var(--mute)}
+
+.nav{display:block;padding:22px 32px 0;max-width:1160px;margin:0 auto;font-size:16px;color:var(--mute);text-decoration:none}
+.nav:hover{color:var(--txt)}
+.tryit{border:1px solid var(--olive);border-radius:4px;padding:18px 18px 20px}
+.tryit .hint{font-family:'HEAD';font-size:15px;letter-spacing:-0.03em;color:var(--olive);margin:0 0 14px;display:flex;gap:10px;align-items:center}
+.tryit .fig{border-radius:3px;overflow:hidden}
+.btn{font-family:'BNP';letter-spacing:-0.03em;font-size:16px;padding:8px 16px;border-radius:999px;border:1px solid var(--rule);background:transparent;color:var(--mute);cursor:pointer}
+.btn:hover{color:var(--txt);border-color:var(--txt)}
+.btn.on{background:var(--olive);color:var(--bg);border-color:var(--olive)}
+.btn.amber{border-color:var(--olive);color:var(--olive)}
+.btn.amber.on{background:var(--olive);color:var(--bg)}
+.ctrl{flex-wrap:wrap}
+.ctrl .lbl,.lbl2{font-size:16px;color:var(--mute);min-width:90px}
+.caption,.cap{font-size:18px;line-height:1.15;color:var(--txt);min-height:46px;margin-top:8px;max-width:60ch}
+.readout{font-size:24px;line-height:1.05;margin:12px 0 4px}
+.note{font-size:16px;color:var(--mute)}
+.sense{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:12px;min-height:80px}
+.sense b{display:block;font-family:'HEAD';font-weight:400;font-size:13px;color:var(--olive);margin-bottom:4px}
+.sense span{font-size:17px;line-height:1.15}
+.sim{border-radius:3px;overflow:hidden;background:#000;margin-top:14px}.sim svg{display:block;width:100%;height:auto}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:180px;max-width:520px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--brown),var(--olive))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--txt);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--txt);cursor:grab}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--txt);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--txt);cursor:grab}
+@media (prefers-reduced-motion:no-preference){
+body:not(.touched) input[type=range]::-webkit-slider-thumb{animation:pulse 1.6s ease-out infinite}
+body:not(.touched) .tryit .arr{animation:nudge 1.2s ease-in-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 2px var(--txt),0 0 0 2px rgba(121,128,77,.9)}100%{box-shadow:0 0 0 2px var(--txt),0 0 0 18px rgba(121,128,77,0)}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}}
+.refs{display:grid;grid-template-columns:1fr;border-top:1px solid var(--rule)}
+.ref{display:grid;grid-template-columns:300px 1fr;gap:12px 40px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.ref h3{font-size:18px;color:var(--txt);margin:0}
+.ref p{margin:0;color:var(--mute);max-width:60ch}
+.long{max-width:700px}
+.long h4{font-family:'HEAD';font-weight:400;font-size:18px;letter-spacing:-0.03em;color:var(--olive);margin:38px 0 12px;line-height:1.1}
+.long p{font-size:21px;line-height:1.22;margin:0 0 .8em;max-width:none}
+.long blockquote{margin:36px 0;padding:0;font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.045em;font-size:clamp(28px,3vw,38px);line-height:.98;color:var(--txt)}
+.dbody blockquote{margin:18px 0;font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.04em;font-size:26px;line-height:1}
+.olist{border-top:1px solid var(--rule)}
+.orow{display:grid;grid-template-columns:1fr 1fr auto;gap:20px;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--rule);text-decoration:none;color:var(--txt)}
+.orow .on{font-family:'HEAD';font-size:clamp(26px,3.4vw,44px);letter-spacing:-0.05em;line-height:.95}
+.orow .os{font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.04em;font-size:clamp(20px,2vw,26px);line-height:1;color:var(--olive)}
+.orow .oa{font-size:28px;color:var(--olive)}
+.orow:hover .on{color:var(--olive)}
+@media (max-width:820px){.ref{grid-template-columns:1fr}.sense{grid-template-columns:1fr}.orow{grid-template-columns:1fr auto}.orow .os{grid-column:1}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="gNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8743e"/><stop offset=".55" stop-color="#8d4a2a"/><stop offset="1" stop-color="#4a3a2c"/></linearGradient>
+<linearGradient id="gMid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d48a55"/><stop offset=".6" stop-color="#a06443"/><stop offset="1" stop-color="#6c5644"/></linearGradient>
+<linearGradient id="gFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a37c"/><stop offset="1" stop-color="#9c8a74"/></linearGradient>
+<linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe6dc"/><stop offset="1" stop-color="#eef0e4"/></linearGradient>
+<linearGradient id="gGround" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7d6b45"/><stop offset=".35" stop-color="#5f5233"/><stop offset="1" stop-color="#3a3122"/></linearGradient>
+<linearGradient id="gFog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9ebdf" stop-opacity="0"/><stop offset=".6" stop-color="#e9ebdf" stop-opacity=".55"/><stop offset="1" stop-color="#e9ebdf" stop-opacity="0"/></linearGradient>
+<symbol id="forest" viewBox="0 0 1200 600"><g id="forestInner"></g></symbol>
+</defs></svg>
+<a class="nav" href="/">← Все объекты</a>
+<header class="w top"><h1>Кольцо</h1><div class="sub">Парит в воздухе,<br>а доделает его лес</div></header>
+<section class="w"><div class="tryit"><div class="hint"><span>Потяните ползунок: промотайте сто лет</span><span class="arr" aria-hidden="true">→</span></div><div class="fig"><svg id="ringSvg" viewBox="0 0 680 440" role="img" aria-label="Кольцо на тросах между соснами и растущая сквозь него сосна"></svg></div>
+  <div class="ctrl"><label for="ry">Через</label><input type="range" id="ry" min="0" max="100" value="0"><span id="ryl" style="min-width:70px">0 лет</span></div>
+  <div class="ctrl"><button class="btn on" id="cNear">Вблизи</button><button class="btn" id="cFar">С пяти метров</button><span class="note">тросы на фоне леса почти исчезают</span></div>
+  <div class="readout" id="ringRead"></div>
+  <p class="note" id="ringCap" style="min-height:52px"></p>
+  
+  </div>
+<div class="grid2" style="margin-top:44px"><p class="lead">Стальное кольцо висит на уровне глаз на трёх почти невидимых тросах от соседних сосен. Под ним растёт молодое дерево. Через несколько лет оно пройдёт сквозь кольцо, через поколение — окажется вокруг ствола.</p><p class="quote">Начал человек, закончит лес.</p></div></section>
+<section class="w"><h2>Вдохновение</h2><div class="refs"><div class="ref"><h3>Джузеппе Пеноне</h3><p>Итальянский художник отлил в бронзе свою руку, сжимающую ствол молодого дерева. С годами дерево растёт, обтекая руку. Работа называется «Будет расти, кроме этой точки».</p></div><div class="ref"><h3>Йозеф Бойс, «7000 дубов»</h3><p>В 1982 году в Касселе художник начал сажать 7000 дубов, рядом с каждым ставя базальтовый камень. Камень не меняется, дерево растёт.</p></div><div class="ref"><h3>Кэти Паттерсон, «Библиотека будущего»</h3><p>В 2014 году под Осло посадили лес, из которого в 2114 году напечатают сто книг. Писатели пишут их сейчас.</p></div></div></section>
+<section class="w" style="border-bottom:0;padding-top:20px"><div class="acc"><details><summary>Что почувствует человек</summary><div class="dbody"><p>Нежность и немного грусти: кольцо висит над маленькой сосенкой, как обещание, которое исполнится не скоро. Хочется вернуться и проверить, как она выросла.</p></div></details><details><summary>Как это связано с лесом</summary><div class="dbody"><p>Под кольцом растёт молодое дерево — лучше всего то, что выросло само. Лес доделывает объект десятилетиями.</p></div></details><details><summary>Философия</summary><div class="dbody">
+<h4>Время больше человека</h4><p>Сосна живёт 200–300 лет, человек около восьмидесяти. Те, кто повесил кольцо, увидят только начало. Есть старая мысль: общество становится великим, когда старики сажают деревья, в тени которых им не сидеть.</p>
+<h4>Два вида кругов</h4><p>Внутри дерева есть годовые кольца: так оно само записывает своё время. Мы вешаем ещё одно кольцо снаружи. Годовые растут, стальное не меняется. Точная человеческая форма и живая жизнь, которая её перерастает.</p>
+<h4>Отметка роста</h4><p>Во многих семьях детей меряют у дверного косяка. Кольцо — такая же отметка, только для дерева. Можно каждый год фотографировать детей рядом с ним: дети и сосна растут вместе.</p>
+<h4>Наследие</h4><p>Психолог Эрик Эриксон называл главной задачей зрелости генеративность — потребность оставить что-то следующим поколениям. Кольцо — её буквальное воплощение.</p>
+<h4>Лёгкое касание</h4><p>Ни столба, ни фундамента. Если подвесить кольцо над деревцем, выросшим само, мы даже ничего не сажаем: лес выбрал дерево, а мы просто обратили на него внимание.</p>
+</div></details><details><summary>Коммерческий потенциал</summary><div class="dbody">
+<h4>Именные кольца</h4><p>Самая сильная коммерческая модель: кольцо в честь рождения ребёнка, свадьбы, памятной даты, с гравировкой на внутренней стороне. Парк или усадьба могут продавать такие кольца семьям и компаниям.</p>
+<h4>Дёшево и тиражно</h4><p>Кольцо, три троса и ремни. Ставится за день, подходит для любого леса и парка.</p>
+<h4>Объект, к которому возвращаются</h4><p>Его хочется проверить через год, через пять лет. Возвращение — это повторные визиты для парка или отеля.</p>
+<h4>Кому</h4><ul><li>парки и усадьбы;</li><li>отели и загородные клубы;</li><li>компании с экологическими программами;</li><li>частные семьи.</li></ul>
+</div></details><details><summary>Как это построить</summary><div class="dbody"><table><tr><td>Кольцо</td><td>Ø 60 см, полое, алюминий или тонкостенная нержавейка/кортен</td></tr><tr><td>Высота</td><td>около 1,4 м</td></tr><tr><td>Подвес</td><td>3 тёмных троса 1–2 мм к соседним соснам</td></tr><tr><td>Крепление</td><td>мягкие ремни для деревьев на высоте 3–4 м</td></tr><tr><td>Гравировка</td><td>«2026 —» на внутренней стороне</td></tr></table><ul style="margin-top:16px"><li>Тросы сходятся к кольцу сверху вниз, чтобы под ними свободно ходить.</li><li>Натяжение проверяют раз в год: стволы растут.</li><li>Кольцо к деревцу не крепится; согласовать с дендрологом.</li></ul></div></details></div></section>
+<footer class="w">Концепция арт-объекта для соснового бора, Тверская область. Иллюстрации схематичные, размеры и материалы уточняются с инженером.</footer>
+<script>
+function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;var t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function trunk(x,b,w,g,o){var tw=w*.62;return '<polygon points="'+(x-tw/2)+',-20 '+(x+tw/2)+',-20 '+(x+w/2)+','+b+' '+(x-w/2)+','+b+'" fill="url(#'+g+')" opacity="'+o+'"/>'+(w>12?'<polygon points="'+(x+tw/2-tw*.35)+',-20 '+(x+tw/2)+',-20 '+(x+w/2)+','+b+' '+(x+w/2-w*.35)+','+b+'" fill="#000" opacity=".22"/>':'')}
+function buildForest(seed,near){var r=rng(seed),s='<rect width="1200" height="600" fill="url(#gSky)"/>',i,x;
+for(i=0;i<26;i++)s+='<ellipse cx="'+(r()*1200|0)+'" cy="'+(10+r()*40|0)+'" rx="'+(40+r()*60|0)+'" ry="'+(18+r()*20|0)+'" fill="#55704a" opacity=".5"/>';
+for(i=0;i<60;i++){x=r()*1200;s+=trunk(x,450+r()*14,3+r()*4,'gFar',.55)}
+s+='<rect width="1200" height="600" fill="#e7eadc" opacity=".25"/><rect y="440" width="1200" height="160" fill="url(#gGround)"/>';
+for(i=0;i<22;i++){x=r()*1200;s+=trunk(x,465+r()*30,8+r()*7,'gMid',.92)}
+s+='<rect y="380" width="1200" height="120" fill="url(#gFog)" opacity=".6"/><g fill="#5d6b33" opacity=".45">';
+for(i=0;i<30;i++)s+='<ellipse cx="'+(r()*1200|0)+'" cy="'+(480+r()*110|0)+'" rx="'+(20+r()*60|0)+'" ry="'+(3+r()*6|0)+'"/>';
+s+='</g>';near.forEach(function(n){s+=trunk(n[0],n[1],n[2],'gNear',1)});
+s+='<g fill="#fff6dc" opacity=".09"><polygon points="250,0 330,0 620,600 470,600"/><polygon points="700,0 740,0 960,600 880,600"/></g><g opacity=".92">';
+r=rng(seed+7);for(i=0;i<18;i++)s+='<ellipse cx="'+(r()*1200|0)+'" cy="'+(r()*30|0)+'" rx="'+(50+r()*70|0)+'" ry="'+(22+r()*18|0)+'" fill="#2b4126"/>';
+return s+'</g>'}
+document.getElementById('forestInner').innerHTML=buildForest(11,[[60,590,34],[175,560,24],[1010,575,28],[1135,598,40],[885,548,18],[335,542,16]]);
+
+function cube(x,b,m){var w=3*m,dx=1.05*m,dy=-.62*m,t=b-w,s='<ellipse cx="'+(x+w/2+dx/2)+'" cy="'+(b+2)+'" rx="'+(w*.75)+'" ry="'+(m*.18)+'" fill="#000" opacity=".35"/>';
+s+='<polygon points="'+x+','+t+' '+(x+dx)+','+(t+dy)+' '+(x+w+dx)+','+(t+dy)+' '+(x+w)+','+t+'" fill="#34322e"/><polygon points="'+(x+w)+','+t+' '+(x+w+dx)+','+(t+dy)+' '+(x+w+dx)+','+(b+dy)+' '+(x+w)+','+b+'" fill="#0d0d0c"/><rect x="'+x+'" y="'+t+'" width="'+w+'" height="'+w+'" fill="#161614"/>';
+for(var i=1;i<20;i++){var bx=x+i*w/20;s+='<line x1="'+bx+'" y1="'+t+'" x2="'+bx+'" y2="'+b+'" stroke="#2b2a27" stroke-width=".8"/>'}
+s+='<line x1="'+(x+w/2)+'" y1="'+t+'" x2="'+(x+w/2)+'" y2="'+b+'" stroke="#000" stroke-width="2"/><circle cx="'+(x+w/2)+'" cy="'+(b-1.5*m)+'" r="'+Math.max(3,m*.09)+'" fill="#0a0a0a" stroke="#c8954e" stroke-width="1.5"/>';
+var ex=x+w+dx*.25,ex2=x+w+dx*.75;s+='<polygon points="'+ex+','+(b+dy*.25)+' '+ex2+','+(b+dy*.75)+' '+ex2+','+(b+dy*.75-2.1*m)+' '+ex+','+(b+dy*.25-2.1*m)+'" fill="#000"/>';return s}
+function person(x,b,m){var h=1.75*m,hr=.11*m;return '<g fill="#1a1917"><circle cx="'+x+'" cy="'+(b-h+hr)+'" r="'+hr+'"/><path d="M'+(x-.22*m)+' '+(b-h+2.3*hr)+' Q'+x+' '+(b-h+1.9*hr)+' '+(x+.22*m)+' '+(b-h+2.3*hr)+' L'+(x+.2*m)+' '+(b-.85*m)+' L'+(x+.12*m)+' '+b+' L'+(x+.03*m)+' '+b+' L'+x+' '+(b-.8*m)+' L'+(x-.03*m)+' '+b+' L'+(x-.12*m)+' '+b+' L'+(x-.2*m)+' '+(b-.85*m)+' Z"/></g>'}
+function hx(c){c=c.replace('#','');return [parseInt(c.substr(0,2),16),parseInt(c.substr(2,2),16),parseInt(c.substr(4,2),16)]}
+function mix(a,b,t){var A=hx(a),B=hx(b);return 'rgb('+A.map(function(v,i){return Math.round(v+(B[i]-v)*t)}).join(',')+')'}
+function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
+function hhmm(t){var h=Math.floor(t),m=Math.round((t-h)*60);if(m==60){h++;m=0}return h+':'+(m<10?'0':'')+m}
+function person(x,b,m,f){var h=1.75*m,hr=.11*m;return '<g fill="'+(f||'#1a1917')+'"><circle cx="'+x+'" cy="'+(b-h+hr)+'" r="'+hr+'"/><path d="M'+(x-.22*m)+' '+(b-h+2.3*hr)+' Q'+x+' '+(b-h+1.9*hr)+' '+(x+.22*m)+' '+(b-h+2.3*hr)+' L'+(x+.2*m)+' '+(b-.85*m)+' L'+(x+.12*m)+' '+b+' L'+(x+.03*m)+' '+b+' L'+x+' '+(b-.8*m)+' L'+(x-.03*m)+' '+b+' L'+(x-.12*m)+' '+b+' L'+(x-.2*m)+' '+(b-.85*m)+' Z"/></g>'}
+(function(){
+  var svg=document.getElementById('ringSvg'),near=true;
+  function H(y){return y<=3?0.4+0.15*y:(y<=20?0.85+0.4*(y-3):7.65+0.18*(y-20))}
+  function draw(){
+    var y=+document.getElementById('ry').value,h=H(y),G=400,cx=340,m=Math.min(80,360/Math.max(h+1,4.2)),s='';
+    s+='<rect width="680" height="440" fill="#E3ECE4"/><g fill="#C79A78" opacity=".45">';[60,190,260,470,520,640].forEach(function(x){s+='<rect x="'+x+'" y="0" width="3" height="'+(G-6)+'"/>'});s+='</g>';
+    s+='<rect y="'+(G-4)+'" width="680" height="'+(444-G)+'" fill="#6F5F3C"/>';
+    var nb=[[-3.4,0.5,3.6],[3.6,0.46,3.4],[1.3,0.3,3.9]];
+    nb.forEach(function(n,i){var x=cx+n[0]*m,w=Math.max(4,n[1]*m),top=G-24*m;s+='<rect x="'+(x-w/2).toFixed(1)+'" y="'+Math.max(-5,top).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+(G-Math.max(-5,top)).toFixed(1)+'" fill="'+(i==2?'#A0643F':'#8D4A2A')+'"/>';
+      if(top>-60){s+='<g fill="#2F4A26"><ellipse cx="'+x+'" cy="'+(top+10)+'" rx="'+(3.2*m)+'" ry="'+(1.6*m)+'"/></g>'}});
+    var rh=G-1.4*m,rx=0.3*m;
+    var tw=Math.max(1.5,(0.02+0.0037*y)*m);
+    var top=G-h*m;
+    if(y<28){var cb=G-Math.max(0.05,h*(y<8?0.05:0.25))*m,cw=Math.max(6,h*0.32*m);
+      s+='<rect x="'+(cx-tw/2)+'" y="'+top+'" width="'+tw+'" height="'+(G-top)+'" fill="#8D4A2A"/>';
+      s+='<polygon points="'+cx+','+top+' '+(cx-cw)+','+cb+' '+(cx+cw)+','+cb+'" fill="#3B6D11"/><polygon points="'+cx+','+top+' '+(cx-cw*.6)+','+(top+(cb-top)*.55)+' '+(cx+cw*.6)+','+(top+(cb-top)*.55)+'" fill="#4E8A1F"/>';
+    }else{var cb2=G-h*0.62*m,cw2=Math.max(10,h*0.2*m);
+      s+='<polygon points="'+(cx-tw*.35)+','+top+' '+(cx+tw*.35)+','+top+' '+(cx+tw/2)+','+G+' '+(cx-tw/2)+','+G+'" fill="#A0522D"/>';
+      s+='<g fill="#2F4A26"><ellipse cx="'+cx+'" cy="'+(top+(cb2-top)*.45)+'" rx="'+cw2+'" ry="'+((cb2-top)*.55)+'"/><ellipse cx="'+(cx-cw2*.6)+'" cy="'+(top+(cb2-top)*.7)+'" rx="'+(cw2*.6)+'" ry="'+((cb2-top)*.3)+'"/></g>';}
+    var op=near?.9:.1;
+    nb.forEach(function(n){var x=cx+n[0]*m+(n[0]<0?1:-1)*Math.max(2,n[1]*m/2),ay=G-n[2]*m;s+='<line x1="'+x.toFixed(1)+'" y1="'+ay.toFixed(1)+'" x2="'+(cx+(n[0]<0?-rx:(n[0]>2?rx:rx*.3))).toFixed(1)+'" y2="'+rh.toFixed(1)+'" stroke="#2C2C2A" stroke-width="1.3" opacity="'+op+'"/>'});
+    s+='<ellipse cx="'+cx+'" cy="'+rh+'" rx="'+rx+'" ry="'+(rx*.3)+'" fill="none" stroke="#8E9396" stroke-width="'+Math.max(2,0.05*m)+'"/><ellipse cx="'+cx+'" cy="'+rh+'" rx="'+rx+'" ry="'+(rx*.3)+'" fill="none" stroke="#D5D9DB" stroke-width="1"/>';
+    s+=person(cx+1.9*m,G,m);
+    svg.innerHTML=s;
+    var d=Math.round((0.02+0.0037*y)*100);
+    document.getElementById('ryl').textContent=y+' '+(y%10==1&&y%100!=11?'год':((y%10>=2&&y%10<=4&&(y%100<10||y%100>=20))?'года':'лет'));
+    document.getElementById('ringRead').textContent='Сосна ≈ '+h.toFixed(1).replace('.',',')+' м, ствол ≈ '+d+' см, кольцо Ø 60 см на высоте 1,4 м';
+    document.getElementById('ringCap').textContent=y<4?'Саженец под кольцом. Кольцо висит в воздухе над маленькой сосенкой, как обещание.':(y<7?'Макушка проходит сквозь кольцо. Хороший повод собрать всех, кто сажал, и, если хочется, поднять кольцо выше.':(y<28?'Кольцо прячется среди нижних веток молодой сосны. Его видно, только если подойти близко.':'Нижние ветки отмерли, как это бывает у сосен, и кольцо оказалось вокруг чистого ствола, далеко под кроной. Люди будут гадать, как оно туда попало.'));
+  }
+  document.getElementById('ry').addEventListener('input',draw);
+  document.getElementById('cNear').addEventListener('click',function(){near=true;this.classList.add('on');document.getElementById('cFar').classList.remove('on');draw()});
+  document.getElementById('cFar').addEventListener('click',function(){near=false;this.classList.add('on');document.getElementById('cNear').classList.remove('on');draw()});
+  draw();
+})();
+</script>
+<script>document.addEventListener('input',function(e){if(e.target.type=='range')document.body.classList.add('touched')});document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.tryit button'))document.body.classList.add('touched')});</script>
+</body>
+</html>

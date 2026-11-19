@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Хранитель</title>
+<style>
+@font-face{font-family:'BNP';src:url(/assets/bnp-rg.ttf) format('truetype');font-weight:400}
+@font-face{font-family:'BNP';src:url(/assets/bnp-md.ttf) format('truetype');font-weight:500}
+@font-face{font-family:'HEAD';src:url(/assets/unb-cyr.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'HEAD';src:url(/assets/unb-lat.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:'PLAYFAIR';font-style:italic;font-weight:400 900;src:url(/assets/playfair-italic.ttf) format('truetype')}
+
+:root{--bg:#2D2920;--green:#3E482A;--olive:#79804D;--brown:#69573B;--txt:#E6E0D2;--mute:#A9A08C;--rule:#4A4434}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font-family:'BNP',sans-serif;font-weight:400;font-size:19px;line-height:1.16;letter-spacing:-0.05em}
+a{color:var(--txt)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:1px solid var(--olive);outline-offset:4px}
+.w{max-width:1160px;margin:0 auto;padding:0 32px}
+p{margin:0 0 .9em;max-width:52ch}
+h1{font-family:'HEAD';font-weight:400;font-size:clamp(64px,11vw,150px);line-height:.85;margin:0;letter-spacing:-0.05em}
+h2{font-family:'HEAD';font-weight:400;font-size:clamp(30px,4vw,50px);line-height:.95;margin:0 0 30px;letter-spacing:-0.05em}
+h3{font-family:'HEAD';font-weight:400;font-size:14px;line-height:1.05;margin:0 0 10px;color:var(--olive);letter-spacing:-0.02em}
+.top{padding:64px 32px 40px;display:grid;grid-template-columns:1fr auto;align-items:end;gap:24px;border-bottom:1px solid var(--rule)}
+.top .sub{font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.045em;font-size:32px;line-height:.8;max-width:none;white-space:nowrap;color:var(--olive);text-align:left}
+section{padding:72px 0;border-bottom:1px solid var(--rule)}
+.fig svg{display:block;width:100%;height:auto}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.lead{font-size:28px;line-height:1.02;max-width:30ch}
+.ins{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ins img{display:block;width:100%;height:auto;filter:grayscale(.2)}
+.ins figcaption{line-height:1.1;font-size:15px;color:var(--mute);margin-top:10px}
+.quote{font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.045em;font-size:clamp(28px,3vw,40px);line-height:.95;max-width:24ch;margin:0 0 32px;padding-bottom:8px;color:var(--txt)}
+.ph{display:grid;grid-template-columns:220px 1fr;gap:20px 48px;margin-top:8px}
+.ph h3{margin:3px 0 0}
+.ph p{margin:0 0 30px}
+.ctrl{display:flex;align-items:center;gap:16px;margin:22px 0 6px;font-size:17px}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;max-width:460px;height:1px;background:var(--mute)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--txt)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:50%;background:var(--txt)}
+.note{font-size:16px;color:var(--mute)}
+.techlink{display:inline-block;font-family:'HEAD';letter-spacing:-0.04em;font-size:20px;text-decoration:none;border-bottom:1px solid var(--olive);padding-bottom:4px}
+#tech{display:none;padding:56px 0 100px}#tech.on{display:block}#main.off{display:none}
+#tech table{width:100%;border-collapse:collapse;margin-top:28px;font-size:18px}
+#tech td{padding:14px 16px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+#tech td:first-child{width:230px;color:var(--olive)}
+#tech td:last-child{color:var(--mute)}
+#tech ul{max-width:60ch;padding-left:1.1em}#tech li{margin-bottom:8px;color:var(--mute)}
+.back{font-size:18px;text-decoration:none;display:inline-block;margin-bottom:36px;color:var(--mute)}
+footer{padding:36px 0 70px;font-size:14px;color:var(--mute)}
+@media (max-width:820px){.grid2,.ins,.ph{grid-template-columns:1fr;gap:20px}.top{grid-template-columns:1fr}.top .sub{font-size:24px}.slider{padding:16px}.ph p{margin-bottom:18px}}
+
+.acc{margin-top:8px;border-top:1px solid var(--rule)}
+details{border-bottom:1px solid var(--rule)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;padding:22px 0;font-family:'HEAD';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.05em;line-height:1}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';font-family:'BNP';font-size:32px;color:var(--olive);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+summary:hover{color:var(--olive)}
+.dbody{padding:0 0 30px;max-width:640px}
+.dbody h4{font-family:'HEAD';font-weight:400;font-size:14px;letter-spacing:-0.02em;color:var(--olive);margin:18px 0 6px;line-height:1.05}
+.dbody p{margin:0 0 .7em}
+.dbody table{width:100%;border-collapse:collapse;font-size:17px}
+.dbody td{padding:10px 14px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.dbody td:first-child{width:170px;color:var(--olive)}
+.dbody td:last-child{color:var(--mute)}
+.dbody ul{padding-left:1.1em;margin:0}.dbody li{margin-bottom:6px;color:var(--mute)}
+.stage{font-size:28px;line-height:1;margin-top:10px}
+
+.slider{margin-top:26px;padding:22px 24px;border:1px solid var(--olive);border-radius:4px;max-width:720px}
+.slider .hint{font-family:'HEAD';font-size:15px;letter-spacing:-0.03em;color:var(--olive);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.slider .hint .arr{display:inline-block}
+.slider .ctrl{margin:0}
+.slider input[type=range]{height:4px;background:linear-gradient(90deg,#8C8E8A,#C0703A 20%,#86593A 55%,#69573B);border-radius:2px;max-width:none}
+.slider input[type=range]::-webkit-slider-thumb{width:28px;height:28px;border:3px solid var(--bg);box-shadow:0 0 0 2px var(--txt);cursor:grab}
+.slider input[type=range]::-moz-range-thumb{width:24px;height:24px;border:3px solid var(--bg);box-shadow:0 0 0 2px var(--txt);cursor:grab}
+@media (prefers-reduced-motion:no-preference){
+.slider:not(.touched) input[type=range]::-webkit-slider-thumb{animation:pulse 1.6s ease-out infinite}
+.slider:not(.touched) .arr{animation:nudge 1.2s ease-in-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 2px var(--txt),0 0 0 2px rgba(121,128,77,.9)}100%{box-shadow:0 0 0 2px var(--txt),0 0 0 18px rgba(121,128,77,0)}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}}
+.slider.touched .hint{color:var(--mute)}
+
+.nav{display:block;padding:22px 32px 0;max-width:1160px;margin:0 auto;font-size:16px;color:var(--mute);text-decoration:none}
+.nav:hover{color:var(--txt)}
+.tryit{border:1px solid var(--olive);border-radius:4px;padding:18px 18px 20px}
+.tryit .hint{font-family:'HEAD';font-size:15px;letter-spacing:-0.03em;color:var(--olive);margin:0 0 14px;display:flex;gap:10px;align-items:center}
+.tryit .fig{border-radius:3px;overflow:hidden}
+.btn{font-family:'BNP';letter-spacing:-0.03em;font-size:16px;padding:8px 16px;border-radius:999px;border:1px solid var(--rule);background:transparent;color:var(--mute);cursor:pointer}
+.btn:hover{color:var(--txt);border-color:var(--txt)}
+.btn.on{background:var(--olive);color:var(--bg);border-color:var(--olive)}
+.btn.amber{border-color:var(--olive);color:var(--olive)}
+.btn.amber.on{background:var(--olive);color:var(--bg)}
+.ctrl{flex-wrap:wrap}
+.ctrl .lbl,.lbl2{font-size:16px;color:var(--mute);min-width:90px}
+.caption,.cap{font-size:18px;line-height:1.15;color:var(--txt);min-height:46px;margin-top:8px;max-width:60ch}
+.readout{font-size:24px;line-height:1.05;margin:12px 0 4px}
+.note{font-size:16px;color:var(--mute)}
+.sense{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:12px;min-height:80px}
+.sense b{display:block;font-family:'HEAD';font-weight:400;font-size:13px;color:var(--olive);margin-bottom:4px}
+.sense span{font-size:17px;line-height:1.15}
+.sim{border-radius:3px;overflow:hidden;background:#000;margin-top:14px}.sim svg{display:block;width:100%;height:auto}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:180px;max-width:520px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--brown),var(--olive))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--txt);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--txt);cursor:grab}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--txt);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--txt);cursor:grab}
+@media (prefers-reduced-motion:no-preference){
+body:not(.touched) input[type=range]::-webkit-slider-thumb{animation:pulse 1.6s ease-out infinite}
+body:not(.touched) .tryit .arr{animation:nudge 1.2s ease-in-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 2px var(--txt),0 0 0 2px rgba(121,128,77,.9)}100%{box-shadow:0 0 0 2px var(--txt),0 0 0 18px rgba(121,128,77,0)}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}}
+.refs{display:grid;grid-template-columns:1fr;border-top:1px solid var(--rule)}
+.ref{display:grid;grid-template-columns:300px 1fr;gap:12px 40px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.ref h3{font-size:18px;color:var(--txt);margin:0}
+.ref p{margin:0;color:var(--mute);max-width:60ch}
+.long{max-width:700px}
+.long h4{font-family:'HEAD';font-weight:400;font-size:18px;letter-spacing:-0.03em;color:var(--olive);margin:38px 0 12px;line-height:1.1}
+.long p{font-size:21px;line-height:1.22;margin:0 0 .8em;max-width:none}
+.long blockquote{margin:36px 0;padding:0;font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.045em;font-size:clamp(28px,3vw,38px);line-height:.98;color:var(--txt)}
+.dbody blockquote{margin:18px 0;font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.04em;font-size:26px;line-height:1}
+.olist{border-top:1px solid var(--rule)}
+.orow{display:grid;grid-template-columns:1fr 1fr auto;gap:20px;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--rule);text-decoration:none;color:var(--txt)}
+.orow .on{font-family:'HEAD';font-size:clamp(26px,3.4vw,44px);letter-spacing:-0.05em;line-height:.95}
+.orow .os{font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.04em;font-size:clamp(20px,2vw,26px);line-height:1;color:var(--olive)}
+.orow .oa{font-size:28px;color:var(--olive)}
+.orow:hover .on{color:var(--olive)}
+@media (max-width:820px){.ref{grid-template-columns:1fr}.sense{grid-template-columns:1fr}.orow{grid-template-columns:1fr auto}.orow .os{grid-column:1}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="gNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8743e"/><stop offset=".55" stop-color="#8d4a2a"/><stop offset="1" stop-color="#4a3a2c"/></linearGradient>
+<linearGradient id="gMid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d48a55"/><stop offset=".6" stop-color="#a06443"/><stop offset="1" stop-color="#6c5644"/></linearGradient>
+<linearGradient id="gFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a37c"/><stop offset="1" stop-color="#9c8a74"/></linearGradient>
+<linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe6dc"/><stop offset="1" stop-color="#eef0e4"/></linearGradient>
+<linearGradient id="gGround" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7d6b45"/><stop offset=".35" stop-color="#5f5233"/><stop offset="1" stop-color="#3a3122"/></linearGradient>
+<linearGradient id="gFog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9ebdf" stop-opacity="0"/><stop offset=".6" stop-color="#e9ebdf" stop-opacity=".55"/><stop offset="1" stop-color="#e9ebdf" stop-opacity="0"/></linearGradient>
+<symbol id="forest" viewBox="0 0 1200 600"><g id="forestInner"></g></symbol>
+</defs></svg>
+<a class="nav" href="/">← Все объекты</a>
+<header class="w top"><h1>Хранитель</h1><div class="sub">Фигура без лица,<br>в которой живёт лес</div></header>
+<section class="w"><div class="tryit"><div class="hint"><span>Переключайте сезон и смотрите, кто прилетает</span><span class="arr" aria-hidden="true">→</span></div><div class="fig"><svg id="scene" viewBox="0 0 1000 620" role="img" aria-label="Тёмная фигура среди сосен, в её дупла залетают синицы, по ступенькам поднимается белка"></svg></div>
+  <div class="ctrl"><button class="btn on" id="bWinter">Зима: кормушка</button><button class="btn" id="bSummer">Весна и лето: дом для птенцов</button></div>
+  <p class="cap" id="cap"></p></div>
+<div class="grid2" style="margin-top:44px"><p class="lead">Высокая тёмная фигура среди сосен, без лица и деталей. Издалека кажется, что кто-то стоит и смотрит. Вблизи видно, что тело фигуры пронизано дуплами: зимой это кормушки для птиц и белок, весной — домики для птенцов.</p><p class="quote">Они сажают лес. Мы их кормим.</p></div></section>
+<section class="w"><h2>Вдохновение</h2><div class="refs"><div class="ref"><h3>Энтони Гормли</h3><p>Британский скульптор, который ставит в пейзаж молчаливые человеческие фигуры без черт лица. Они не изображают кого-то конкретного, а отмечают присутствие.</p></div><div class="ref"><h3>Николай Полисский</h3><p>Русский художник лэнд-арта, работающий в Никола-Ленивце с ветками, сеном и деревом: огромные объекты из природных материалов, живущие вместе с ландшафтом.</p></div></div></section>
+<section class="w" style="border-bottom:0;padding-top:20px"><div class="acc"><details><summary>Что почувствует человек</summary><div class="dbody"><p>Издалека — тревожный силуэт, вблизи — жизнь: синицы ныряют в дупла, белка взбегает по ступенькам. Кладёшь горсть семечек и через пару минут видишь, как к ней прилетают.</p></div></details><details><summary>Как это связано с лесом</summary><div class="dbody"><p>Единственный объект, сделанный не для людей, а для других жителей леса. Человек здесь гость и помощник.</p></div></details><details><summary>Философия</summary><div class="dbody">
+<h4>Хранитель — это мы</h4><p>Фигура сама ничего не охраняет. Без людей дупла пустеют. Хранителем её делает каждый, кто положил горсть семечек: забота — не символ, а маленькое регулярное действие.</p>
+<h4>Настоящие хранители — звери</h4><p>Сойки и белки прячут семена и орехи, часть забывают, и из забытого вырастают новые деревья. Лес сажают те, кого мы кормим.</p>
+<h4>Лес — не декорация</h4><p>Мы приходим сюда на прогулку, а кто-то здесь живёт, зимует и выводит птенцов. Хранитель напоминает, что в лесу мы в гостях.</p>
+<h4>Образ без лица</h4><p>В славянских сказках у леса есть хозяин — леший. Мы не вырезаем его с бородой и посохом, а лишь намекаем на присутствие. Каждый сам дорисует, кто это.</p>
+</div></details><details><summary>Коммерческий потенциал</summary><div class="dbody">
+<h4>Вовлекает семьи</h4><p>Детям нужно действие, и здесь оно есть: покормить птиц, проверить, кто прилетел. Семьи возвращаются, особенно зимой.</p>
+<h4>Экопросвещение</h4><p>Готовая площадка для программ о птицах и лесе, школьных экскурсий, наблюдений с орнитологами.</p>
+<h4>Несложно и недорого</h4><p>Фигура из обожжённого дерева на стальном сердечнике, ставится на одну сваю. Можно тиражировать в разных размерах.</p>
+<h4>Кому</h4><ul><li>парки и ботанические сады;</li><li>отели и загородные клубы;</li><li>школы и детские центры;</li><li>компании с экологическими программами.</li></ul>
+</div></details><details><summary>Как это построить</summary><div class="dbody"><table><tr><td>Высота</td><td>около 3,5 м</td></tr><tr><td>Материал</td><td>обожжённая лиственница на стальном сердечнике</td></tr><tr><td>Опора</td><td>винтовая свая, без крепления к деревьям</td></tr><tr><td>Дупла</td><td>нижнее — для людей (около 1 м), средние — кормушки, верхнее — гнездовой домик</td></tr><tr><td>Рядом</td><td>ящик с кормом и лавка в 5–7 м</td></tr></table><ul style="margin-top:16px"><li>Корм: несолёные семечки, орехи, несолёное сало зимой. Нельзя хлеб и солёное.</li><li>Кормушки наполняют регулярно с поздней осени до весны и чистят раз в неделю-две.</li><li>Схему дупел стоит согласовать с орнитологом.</li></ul></div></details></div></section>
+<footer class="w">Концепция арт-объекта для соснового бора, Тверская область. Иллюстрации схематичные, размеры и материалы уточняются с инженером.</footer>
+<script>
+(function(){
+var svg=document.getElementById('scene'),NS='http://www.w3.org/2000/svg',winter=true;
+var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var G=560;
+var s='';
+s+='<rect id="sky" width="1000" height="620" fill="#E3ECE4"/>';
+s+='<g fill="#C79A78" opacity=".5"><rect x="60" y="0" width="6" height="'+(G-10)+'"/><rect x="230" y="0" width="5" height="'+(G-14)+'"/><rect x="330" y="0" width="4" height="'+(G-16)+'"/><rect x="690" y="0" width="5" height="'+(G-14)+'"/><rect x="900" y="0" width="6" height="'+(G-10)+'"/></g>';
+s+='<rect id="ground" y="'+G+'" width="1000" height="'+(620-G)+'" fill="#6F5F3C"/>';
+s+='<g fill="#8D4A2A"><rect x="120" y="0" width="22" height="'+(G+6)+'"/><rect x="820" y="0" width="24" height="'+(G+8)+'"/></g>';
+s+='<g id="crowns" fill="#2F4A26"><ellipse cx="130" cy="8" rx="160" ry="40"/><ellipse cx="500" cy="0" rx="200" ry="34"/><ellipse cx="840" cy="8" rx="170" ry="42"/></g>';
+s+='<g id="snowcaps" fill="#F4F6F7" style="display:none"><ellipse cx="130" cy="34" rx="120" ry="10"/><ellipse cx="840" cy="36" rx="130" ry="10"/><ellipse cx="500" cy="122" rx="38" ry="12"/></g>';
+s+='<path d="M430 '+(G+2)+' L444 245 Q450 222 476 218 L524 218 Q550 222 556 245 L570 '+(G+2)+' Z" fill="#1B1A18"/>';
+s+='<ellipse cx="500" cy="168" rx="44" ry="54" fill="#1B1A18"/>';
+s+='<g stroke="#2C2A26" stroke-width="1.2">';[460,486,514,540].forEach(function(x,i){s+='<line x1="'+x+'" y1="'+(i==0||i==3?232:222)+'" x2="'+(x+(x-500)*.25)+'" y2="'+G+'"/>'});s+='</g>';
+s+='<g fill="#0A0A09" stroke="#5A3E26" stroke-width="2.5"><ellipse cx="478" cy="285" rx="16" ry="20"/><ellipse cx="528" cy="365" rx="18" ry="22"/><ellipse cx="500" cy="460" rx="24" ry="27"/></g>';
+s+='<g fill="#5A3E26"><rect x="512" y="386" width="40" height="5" rx="2"/><rect x="474" y="486" width="52" height="6" rx="2"/></g>';
+s+='<g id="seeds" fill="#E9E2C8"><circle cx="488" cy="483" r="2.5"/><circle cx="497" cy="484" r="2.5"/><circle cx="506" cy="483" r="2.5"/><circle cx="514" cy="484" r="2.5"/><circle cx="524" cy="390" r="2"/><circle cx="532" cy="390" r="2"/></g>';
+s+='<g id="plug" style="display:none"><ellipse cx="500" cy="460" rx="22" ry="25" fill="#7A5A3A"/><ellipse cx="500" cy="460" rx="12" ry="14" fill="#6A4A2E"/></g>';
+s+='<g fill="#8A6A44">';[525,490,455,420,388].forEach(function(y){s+='<rect x="566" y="'+y+'" width="24" height="5" rx="2"/>'});s+='</g>';
+s+='<g fill="#5A3E26"><rect x="640" y="'+(G-34)+'" width="70" height="34" rx="3"/><rect x="636" y="'+(G-40)+'" width="78" height="8" rx="2"/></g>';
+s+='<g id="actors"></g>';
+svg.innerHTML=s;
+var actors=svg.querySelector('#actors');
+
+function el(html,k){var g=document.createElementNS(NS,'g');g.innerHTML='<g transform="scale('+(k||1.5)+')">'+html+'</g>';actors.appendChild(g);return g}
+function tit(){return el('<g class="body"><ellipse cx="0" cy="0" rx="11" ry="8" fill="#E4C33A"/><ellipse cx="2" cy="1" rx="3" ry="6" fill="#1A1A1A" opacity=".85"/><circle cx="9" cy="-6" r="6" fill="#1A1A1A"/><circle cx="10" cy="-5" r="2.6" fill="#F4F2EA"/><polygon points="14,-6 20,-4.5 14,-3.5" fill="#333"/><path d="M-10 0 L-20 3 L-11 4 Z" fill="#4A5A6A"/></g><ellipse class="wing" cx="-2" cy="-3" rx="10" ry="5" fill="#6C8A8E"/><g class="food" style="display:none"><path d="M19 -4 q6 2 10 -1" stroke="#5B8A2A" stroke-width="3" fill="none" stroke-linecap="round"/></g>')}
+function nuthatch(){return el('<g class="body"><ellipse cx="0" cy="0" rx="11" ry="7" fill="#7E96B0"/><ellipse cx="1" cy="3" rx="8" ry="4" fill="#D9A36A"/><circle cx="9" cy="-5" r="5.5" fill="#7E96B0"/><path d="M5 -6 L15 -5" stroke="#1A1A1A" stroke-width="1.8"/><polygon points="14,-6 22,-5 14,-3.6" fill="#333"/><path d="M-10 0 L-17 2 L-10 3 Z" fill="#5E7690"/></g><ellipse class="wing" cx="-2" cy="-3" rx="9" ry="4.5" fill="#5E7690"/>')}
+function squirrel(){return el('<path d="M-12 2 Q-34 -6 -28 -30 Q-20 -44 -8 -30 Q-14 -18 -8 -6" fill="#B85A26"/><ellipse cx="0" cy="0" rx="15" ry="9" fill="#C8682E"/><circle cx="14" cy="-7" r="8" fill="#C8682E"/><polygon points="12,-14 15,-22 18,-13" fill="#B85A26"/><circle cx="17" cy="-8" r="1.6" fill="#111"/><ellipse cx="5" cy="5" rx="7" ry="3" fill="#E9C9A0"/>',1.15)}
+
+var tA=tit(),tB=nuthatch(),tC=tit(),sq=squirrel();
+var H1=[478,282],H2=[528,362],L1=[500,478],L2=[532,382];
+function bz(p,t){var u=1-t;return [u*u*u*p[0][0]+3*u*u*t*p[1][0]+3*u*t*t*p[2][0]+t*t*t*p[3][0],u*u*u*p[0][1]+3*u*u*t*p[1][1]+3*u*t*t*p[2][1]+t*t*t*p[3][1]]}
+function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
+function place(g,x,y,sc,flip,rot){g.setAttribute('transform','translate('+x.toFixed(1)+' '+y.toFixed(1)+') rotate('+(rot||0)+') scale('+((flip?-1:1)*sc).toFixed(3)+' '+sc.toFixed(3)+')');g.style.display=sc<=0.01?'none':''}
+function flap(g,on,t){var w=g.querySelector('.wing');if(w)w.setAttribute('transform',on?'scale(1 '+(Math.sin(t*40)*.9).toFixed(2)+')':'')}
+// bird that enters a hollow and comes out again
+function hollowBird(g,t,per,off,inP,outP,H){
+  var k=((t+off)%per+per)%per;
+  if(k<2.4){var q=ease(k/2.4),p=bz(inP,q),n=bz(inP,Math.min(1,q+.02));place(g,p[0],p[1],1,n[0]<p[0]);flap(g,true,t);return}
+  if(k<2.8){var f=1-(k-2.4)/.4;place(g,H[0],H[1]+4,f,inP[3][0]<inP[2][0]);flap(g,false,t);return}
+  if(k<5.6){place(g,0,0,0);return}
+  if(k<6.0){var f2=(k-5.6)/.4;place(g,H[0],H[1]+4,f2,outP[3][0]<outP[0][0]);flap(g,false,t);return}
+  if(k<8.4){var q2=ease((k-6)/2.4),p2=bz(outP,q2),n2=bz(outP,Math.min(1,q2+.02));place(g,p2[0],p2[1],1,n2[0]<p2[0]);flap(g,true,t);return}
+  place(g,0,0,0)}
+// bird that lands on a ledge and pecks
+function ledgeBird(g,t,per,off,inP,outP,L){
+  var k=((t+off)%per+per)%per;
+  if(k<2.2){var q=ease(k/2.2),p=bz(inP,q),n=bz(inP,Math.min(1,q+.02));place(g,p[0],p[1],1,n[0]<p[0]);flap(g,true,t);return}
+  if(k<6.5){var peck=(Math.floor((k-2.2)*2)%3==0)?18:0;place(g,L[0],L[1],1,false,peck);flap(g,false,t);return}
+  if(k<8.6){var q2=ease((k-6.5)/2.1),p2=bz(outP,q2),n2=bz(outP,Math.min(1,q2+.02));place(g,p2[0],p2[1],1,n2[0]<p2[0]);flap(g,true,t);return}
+  place(g,0,0,0)}
+function sqAt(t){
+  var k=t%14,gx=578,top=380;
+  if(k<2.2){var q=ease(k/2.2);return [832-(832-gx)*q,G-8,false,0]}
+  if(k<4.8){var q2=(k-2.2)/2.6,hop=Math.abs(Math.sin(q2*Math.PI*5))*6;return [gx+hop,G-12-(G-12-top)*q2,false,-90]}
+  if(k<5.3){var q3=(k-4.8)/.5;return [gx-(gx-546)*q3,top-(Math.sin(q3*Math.PI)*14)+(374-top)*q3,true,0]}
+  if(k<9){var tw=Math.sin(k*6)*3;return [546,374+Math.abs(tw)*.3,true,tw]}
+  if(k<9.5){var q4=(k-9)/.5;return [546+(gx-546)*q4,374-(Math.sin(q4*Math.PI)*14)+(top-374)*q4,false,0]}
+  if(k<11.8){var q5=(k-9.5)/2.3;return [gx,top+(G-12-top)*q5,false,90]}
+  if(k<14){var q6=ease((k-11.8)/2.2);return [gx+(832-gx)*q6,G-8,false,0]}
+}
+var inA=[[-40,120],[200,60],[380,220],H1],outA=[H1,[380,250],[220,110],[-40,90]];
+var inB=[[1040,150],[820,90],[640,260],H2],outB=[H2,[650,300],[860,140],[1040,180]];
+var inC=[[-40,330],[160,260],[380,400],L1],outC=[L1,[360,420],[180,300],[-40,340]];
+var cap=document.getElementById('cap');
+function setSeason(w){winter=w;
+  document.getElementById('ground').setAttribute('fill',w?'#F5F7F8':'#6F5F3C');
+  document.getElementById('sky').setAttribute('fill',w?'#D6DFE5':'#E3ECE4');
+  document.getElementById('snowcaps').style.display=w?'':'none';
+  document.getElementById('plug').style.display=w?'none':'';
+  document.getElementById('seeds').style.display=w?'':'none';
+  tA.querySelector('.food').style.display=w?'none':'';
+  document.getElementById('bWinter').classList.toggle('on',w);document.getElementById('bSummer').classList.toggle('on',!w);
+  cap.textContent=w?'Зима. Люди кладут семечки в нижнее дупло, синицы и поползень залетают в дупла за кормом, белка взбирается по ступенькам к своей кладовой.':'Весна и лето. Кормушки закрыты деревянными пробками, а в верхнем дупле гнездо: синица снова и снова приносит птенцам гусениц.';
+}
+document.getElementById('bWinter').addEventListener('click',function(){setSeason(true)});
+document.getElementById('bSummer').addEventListener('click',function(){setSeason(false)});
+setSeason(true);
+var t0=null;
+function frame(ts){if(t0==null)t0=ts;var t=(ts-t0)/1000;
+  hollowBird(tA,t,winter?9:6.5,0,inA,outA,H1);
+  if(winter){hollowBird(tB,t,10,4,inB,outB,H2);ledgeBird(tC,t,11,7,inC,outC,L1)}
+  else{place(tB,0,0,0);place(tC,0,0,0)}
+  var q=sqAt(t+3);if(winter||((t+3)%14<2.2||(t+3)%14>11.8)){place(sq,q[0],q[1],1,q[2],q[3])}else{var r=sqAt(1);place(sq,r[0],r[1],1,r[2],r[3])}
+  requestAnimationFrame(frame)}
+if(reduce){place(tA,H1[0]-30,H1[1]-6,1,false);place(tB,L2[0]+6,L2[1]-8,1,true);place(tC,L1[0]-14,L1[1]-6,1,false);place(sq,546,374,1,true)}
+else requestAnimationFrame(frame);
+})();
+</script>
+<script>document.addEventListener('input',function(e){if(e.target.type=='range')document.body.classList.add('touched')});document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.tryit button'))document.body.classList.add('touched')});</script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тропа без глаз</title>
+<style>
+@font-face{font-family:'BNP';src:url(/assets/bnp-rg.ttf) format('truetype');font-weight:400}
+@font-face{font-family:'BNP';src:url(/assets/bnp-md.ttf) format('truetype');font-weight:500}
+@font-face{font-family:'HEAD';src:url(/assets/unb-cyr.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'HEAD';src:url(/assets/unb-lat.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:'PLAYFAIR';font-style:italic;font-weight:400 900;src:url(/assets/playfair-italic.ttf) format('truetype')}
+
+:root{--bg:#2D2920;--green:#3E482A;--olive:#79804D;--brown:#69573B;--txt:#E6E0D2;--mute:#A9A08C;--rule:#4A4434}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font-family:'BNP',sans-serif;font-weight:400;font-size:19px;line-height:1.16;letter-spacing:-0.05em}
+a{color:var(--txt)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:1px solid var(--olive);outline-offset:4px}
+.w{max-width:1160px;margin:0 auto;padding:0 32px}
+p{margin:0 0 .9em;max-width:52ch}
+h1{font-family:'HEAD';font-weight:400;font-size:clamp(64px,11vw,150px);line-height:.85;margin:0;letter-spacing:-0.05em}
+h2{font-family:'HEAD';font-weight:400;font-size:clamp(30px,4vw,50px);line-height:.95;margin:0 0 30px;letter-spacing:-0.05em}
+h3{font-family:'HEAD';font-weight:400;font-size:14px;line-height:1.05;margin:0 0 10px;color:var(--olive);letter-spacing:-0.02em}
+.top{padding:64px 32px 40px;display:grid;grid-template-columns:1fr auto;align-items:end;gap:24px;border-bottom:1px solid var(--rule)}
+.top .sub{font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.045em;font-size:32px;line-height:.8;max-width:none;white-space:nowrap;color:var(--olive);text-align:left}
+section{padding:72px 0;border-bottom:1px solid var(--rule)}
+.fig svg{display:block;width:100%;height:auto}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.lead{font-size:28px;line-height:1.02;max-width:30ch}
+.ins{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ins img{display:block;width:100%;height:auto;filter:grayscale(.2)}
+.ins figcaption{line-height:1.1;font-size:15px;color:var(--mute);margin-top:10px}
+.quote{font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.045em;font-size:clamp(28px,3vw,40px);line-height:.95;max-width:24ch;margin:0 0 32px;padding-bottom:8px;color:var(--txt)}
+.ph{display:grid;grid-template-columns:220px 1fr;gap:20px 48px;margin-top:8px}
+.ph h3{margin:3px 0 0}
+.ph p{margin:0 0 30px}
+.ctrl{display:flex;align-items:center;gap:16px;margin:22px 0 6px;font-size:17px}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;max-width:460px;height:1px;background:var(--mute)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--txt)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:50%;background:var(--txt)}
+.note{font-size:16px;color:var(--mute)}
+.techlink{display:inline-block;font-family:'HEAD';letter-spacing:-0.04em;font-size:20px;text-decoration:none;border-bottom:1px solid var(--olive);padding-bottom:4px}
+#tech{display:none;padding:56px 0 100px}#tech.on{display:block}#main.off{display:none}
+#tech table{width:100%;border-collapse:collapse;margin-top:28px;font-size:18px}
+#tech td{padding:14px 16px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+#tech td:first-child{width:230px;color:var(--olive)}
+#tech td:last-child{color:var(--mute)}
+#tech ul{max-width:60ch;padding-left:1.1em}#tech li{margin-bottom:8px;color:var(--mute)}
+.back{font-size:18px;text-decoration:none;display:inline-block;margin-bottom:36px;color:var(--mute)}
+footer{padding:36px 0 70px;font-size:14px;color:var(--mute)}
+@media (max-width:820px){.grid2,.ins,.ph{grid-template-columns:1fr;gap:20px}.top{grid-template-columns:1fr}.top .sub{font-size:24px}.slider{padding:16px}.ph p{margin-bottom:18px}}
+
+.acc{margin-top:8px;border-top:1px solid var(--rule)}
+details{border-bottom:1px solid var(--rule)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;padding:22px 0;font-family:'HEAD';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.05em;line-height:1}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';font-family:'BNP';font-size:32px;color:var(--olive);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+summary:hover{color:var(--olive)}
+.dbody{padding:0 0 30px;max-width:640px}
+.dbody h4{font-family:'HEAD';font-weight:400;font-size:14px;letter-spacing:-0.02em;color:var(--olive);margin:18px 0 6px;line-height:1.05}
+.dbody p{margin:0 0 .7em}
+.dbody table{width:100%;border-collapse:collapse;font-size:17px}
+.dbody td{padding:10px 14px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.dbody td:first-child{width:170px;color:var(--olive)}
+.dbody td:last-child{color:var(--mute)}
+.dbody ul{padding-left:1.1em;margin:0}.dbody li{margin-bottom:6px;color:var(--mute)}
+.stage{font-size:28px;line-height:1;margin-top:10px}
+
+.slider{margin-top:26px;padding:22px 24px;border:1px solid var(--olive);border-radius:4px;max-width:720px}
+.slider .hint{font-family:'HEAD';font-size:15px;letter-spacing:-0.03em;color:var(--olive);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.slider .hint .arr{display:inline-block}
+.slider .ctrl{margin:0}
+.slider input[type=range]{height:4px;background:linear-gradient(90deg,#8C8E8A,#C0703A 20%,#86593A 55%,#69573B);border-radius:2px;max-width:none}
+.slider input[type=range]::-webkit-slider-thumb{width:28px;height:28px;border:3px solid var(--bg);box-shadow:0 0 0 2px var(--txt);cursor:grab}
+.slider input[type=range]::-moz-range-thumb{width:24px;height:24px;border:3px solid var(--bg);box-shadow:0 0 0 2px var(--txt);cursor:grab}
+@media (prefers-reduced-motion:no-preference){
+.slider:not(.touched) input[type=range]::-webkit-slider-thumb{animation:pulse 1.6s ease-out infinite}
+.slider:not(.touched) .arr{animation:nudge 1.2s ease-in-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 2px var(--txt),0 0 0 2px rgba(121,128,77,.9)}100%{box-shadow:0 0 0 2px var(--txt),0 0 0 18px rgba(121,128,77,0)}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}}
+.slider.touched .hint{color:var(--mute)}
+
+.nav{display:block;padding:22px 32px 0;max-width:1160px;margin:0 auto;font-size:16px;color:var(--mute);text-decoration:none}
+.nav:hover{color:var(--txt)}
+.tryit{border:1px solid var(--olive);border-radius:4px;padding:18px 18px 20px}
+.tryit .hint{font-family:'HEAD';font-size:15px;letter-spacing:-0.03em;color:var(--olive);margin:0 0 14px;display:flex;gap:10px;align-items:center}
+.tryit .fig{border-radius:3px;overflow:hidden}
+.btn{font-family:'BNP';letter-spacing:-0.03em;font-size:16px;padding:8px 16px;border-radius:999px;border:1px solid var(--rule);background:transparent;color:var(--mute);cursor:pointer}
+.btn:hover{color:var(--txt);border-color:var(--txt)}
+.btn.on{background:var(--olive);color:var(--bg);border-color:var(--olive)}
+.btn.amber{border-color:var(--olive);color:var(--olive)}
+.btn.amber.on{background:var(--olive);color:var(--bg)}
+.ctrl{flex-wrap:wrap}
+.ctrl .lbl,.lbl2{font-size:16px;color:var(--mute);min-width:90px}
+.caption,.cap{font-size:18px;line-height:1.15;color:var(--txt);min-height:46px;margin-top:8px;max-width:60ch}
+.readout{font-size:24px;line-height:1.05;margin:12px 0 4px}
+.note{font-size:16px;color:var(--mute)}
+.sense{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:12px;min-height:80px}
+.sense b{display:block;font-family:'HEAD';font-weight:400;font-size:13px;color:var(--olive);margin-bottom:4px}
+.sense span{font-size:17px;line-height:1.15}
+.sim{border-radius:3px;overflow:hidden;background:#000;margin-top:14px}.sim svg{display:block;width:100%;height:auto}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:180px;max-width:520px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--brown),var(--olive))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--txt);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--txt);cursor:grab}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--txt);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--txt);cursor:grab}
+@media (prefers-reduced-motion:no-preference){
+body:not(.touched) input[type=range]::-webkit-slider-thumb{animation:pulse 1.6s ease-out infinite}
+body:not(.touched) .tryit .arr{animation:nudge 1.2s ease-in-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 2px var(--txt),0 0 0 2px rgba(121,128,77,.9)}100%{box-shadow:0 0 0 2px var(--txt),0 0 0 18px rgba(121,128,77,0)}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}}
+.refs{display:grid;grid-template-columns:1fr;border-top:1px solid var(--rule)}
+.ref{display:grid;grid-template-columns:300px 1fr;gap:12px 40px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.ref h3{font-size:18px;color:var(--txt);margin:0}
+.ref p{margin:0;color:var(--mute);max-width:60ch}
+.long{max-width:700px}
+.long h4{font-family:'HEAD';font-weight:400;font-size:18px;letter-spacing:-0.03em;color:var(--olive);margin:38px 0 12px;line-height:1.1}
+.long p{font-size:21px;line-height:1.22;margin:0 0 .8em;max-width:none}
+.long blockquote{margin:36px 0;padding:0;font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.045em;font-size:clamp(28px,3vw,38px);line-height:.98;color:var(--txt)}
+.dbody blockquote{margin:18px 0;font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.04em;font-size:26px;line-height:1}
+.olist{border-top:1px solid var(--rule)}
+.orow{display:grid;grid-template-columns:1fr 1fr auto;gap:20px;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--rule);text-decoration:none;color:var(--txt)}
+.orow .on{font-family:'HEAD';font-size:clamp(26px,3.4vw,44px);letter-spacing:-0.05em;line-height:.95}
+.orow .os{font-family:'PLAYFAIR';font-style:italic;letter-spacing:-0.04em;font-size:clamp(20px,2vw,26px);line-height:1;color:var(--olive)}
+.orow .oa{font-size:28px;color:var(--olive)}
+.orow:hover .on{color:var(--olive)}
+@media (max-width:820px){.ref{grid-template-columns:1fr}.sense{grid-template-columns:1fr}.orow{grid-template-columns:1fr auto}.orow .os{grid-column:1}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="gNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8743e"/><stop offset=".55" stop-color="#8d4a2a"/><stop offset="1" stop-color="#4a3a2c"/></linearGradient>
+<linearGradient id="gMid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d48a55"/><stop offset=".6" stop-color="#a06443"/><stop offset="1" stop-color="#6c5644"/></linearGradient>
+<linearGradient id="gFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a37c"/><stop offset="1" stop-color="#9c8a74"/></linearGradient>
+<linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe6dc"/><stop offset="1" stop-color="#eef0e4"/></linearGradient>
+<linearGradient id="gGround" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7d6b45"/><stop offset=".35" stop-color="#5f5233"/><stop offset="1" stop-color="#3a3122"/></linearGradient>
+<linearGradient id="gFog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9ebdf" stop-opacity="0"/><stop offset=".6" stop-color="#e9ebdf" stop-opacity=".55"/><stop offset="1" stop-color="#e9ebdf" stop-opacity="0"/></linearGradient>
+<symbol id="forest" viewBox="0 0 1200 600"><g id="forestInner"></g></symbol>
+</defs></svg>
+<a class="nav" href="/">← Все объекты</a>
+<header class="w top"><h1>Тропа без глаз</h1><div class="sub">Лес, который<br>знаешь ногами</div></header>
+<section class="w"><div class="tryit"><div class="hint"><span>Потяните ползунок: пройдите тропу вслепую</span><span class="arr" aria-hidden="true">→</span></div><div class="fig"><svg id="trailSvg" viewBox="0 0 680 420" role="img" aria-label="Карта тропы со стальным поручнем">
+<defs><mask id="blind"><rect width="680" height="420" fill="#fff"/><circle id="hole" cx="50" cy="362" r="48" fill="#000"/></mask></defs>
+<rect width="680" height="420" fill="#E4DFCF"/>
+<ellipse cx="115" cy="345" rx="80" ry="40" fill="#B9825A" opacity=".75"/><ellipse cx="235" cy="255" rx="70" ry="40" fill="#7D8F4A" opacity=".8"/><ellipse cx="335" cy="300" rx="55" ry="32" fill="#8A6A4A" opacity=".55"/>
+<g stroke="#5A3E26" stroke-width="2" fill="none" opacity=".8"><path d="M300 290 q20 -10 40 5"/><path d="M315 315 q15 10 40 -5"/><path d="M335 285 q5 15 25 20"/></g>
+<path d="M370 20 C390 120 440 200 430 260 C420 320 460 380 480 420" fill="none" stroke="#8FBBD0" stroke-width="22" opacity=".85"/>
+<ellipse cx="500" cy="175" rx="55" ry="34" fill="#E9D8A6"/><ellipse cx="590" cy="110" rx="70" ry="45" fill="#F2DE90" opacity=".85"/>
+<g fill="#2F4A26" opacity=".85"><circle cx="40" cy="60" r="16"/><circle cx="160" cy="110" r="14"/><circle cx="90" cy="200" r="13"/><circle cx="300" cy="120" r="15"/><circle cx="560" cy="300" r="16"/><circle cx="640" cy="230" r="13"/><circle cx="250" cy="390" r="14"/><circle cx="380" cy="400" r="12"/></g>
+<path d="M50 370 C150 370 140 250 240 250 S320 330 400 280 S440 170 500 170 S600 170 620 70" fill="none" stroke="#C9BFA6" stroke-width="14" stroke-linecap="round"/>
+<path id="rail" d="M50 362 C150 362 140 242 240 242 S320 322 400 272 S440 162 500 162 S600 162 614 64" fill="none" stroke="#2C2C2A" stroke-width="2.5"/>
+<g stroke="#7A5A3A" stroke-width="3"><line x1="420" y1="244" x2="438" y2="262"/><line x1="426" y1="238" x2="444" y2="256"/><line x1="432" y1="232" x2="450" y2="250"/></g>
+<g font-family="Geologica" font-size="13" fill="#2C2C2A"><text x="20" y="402">Старт: повязка на глаза</text><text x="70" y="318">Мягкая хвоя</text><text x="200" y="208">Пружинящий мох</text><text x="300" y="345">Корни под ногами</text><text x="455" y="268">Гулкие мостки</text><text x="455" y="284">над ручьём</text><text x="470" y="215">Сыпучий песок</text><text x="540" y="160">Солнце на поляне</text><text x="470" y="40">Финиш: снять повязку</text></g>
+<rect id="blindRect" width="680" height="420" fill="#141412" opacity=".9" mask="url(#blind)" style="transition:opacity .9s"/>
+<circle id="walker" cx="50" cy="362" r="7" fill="#E8A13A" stroke="#fff" stroke-width="2"/>
+</svg></div>
+<div class="ctrl"><label for="tr">Пройдено</label><input type="range" id="tr" min="0" max="100" value="0"><span id="trl" style="min-width:56px">0 м</span><button class="btn" id="blindBtn">Снять повязку</button></div>
+<div class="sense"><div><b>Под ногами</b><span id="sF"></span></div><div><b>Слышно</b><span id="sH"></span></div><div><b>Чувствуешь</b><span id="sS"></span></div></div>
+  
+  </div>
+<div class="grid2" style="margin-top:44px"><p class="lead">Стальной поручень ведёт сто метров через разные участки леса. На старте надеваешь повязку и идёшь вслепую, держась рукой за холодную сталь.</p><p class="quote">Без зрения лес не исчезает. Он становится ближе.</p></div></section>
+<section class="w"><h2>Вдохновение</h2><div class="refs"><div class="ref"><h3>«Диалог в темноте»</h3><p>Выставка-опыт, придуманная в Германии в 1988 году: зрячих посетителей водят по полностью тёмным комнатам незрячие гиды. Прошла в десятках стран.</p></div><div class="ref"><h3>Босоногие тропы</h3><p>В Германии и Австрии десятки парков с тропами, которые проходят босиком: песок, шишки, мох, глина, вода. Их делают ради ощущений, а не ради вида.</p></div><div class="ref"><h3>Юхани Паллазмаа, «Глаза кожи»</h3><p>Книга финского архитектора о том, что мы воспринимаем пространство всем телом, а современная культура свела всё к зрению.</p></div></div></section>
+<section class="w" style="border-bottom:0;padding-top:20px"><div class="acc"><details><summary>Что почувствует человек</summary><div class="dbody"><p>Без зрения просыпаются остальные чувства: ноги различают хвою, мох и песок, кожа чувствует солнце и тень. Сначала немного страшно, потом удивительно спокойно. На финише снимаешь повязку и не узнаёшь путь.</p></div></details><details><summary>Как это связано с лесом</summary><div class="dbody"><p>Тропа проходит через разные части леса — сухие и сырые, светлые и тёмные. Лес узнаётся ногами, без единого взгляда.</p></div></details><details><summary>Философия</summary><div class="dbody">
+<h4>Культура глаз</h4><p>Мы говорим «я вижу», когда понимаем, верим тому, что видели своими глазами, и всё больше живём в картинках. Архитектор Юхани Паллазмаа назвал это диктатурой зрения: остальные чувства постепенно глохнут.</p>
+<h4>Тело знает больше</h4><p>Философ Морис Мерло-Понти писал, что мы познаём мир прежде всего телом, а уже потом умом. Нога, которая нащупывает корень, знает о лесе то, чего не знают глаза.</p>
+<h4>Доверие</h4><p>Идти с закрытыми глазами страшно, и держит тебя только поручень. Это маленький опыт доверия и уязвимости, которого во взрослой жизни почти нет: приходится отпустить контроль и довериться пути.</p>
+<h4>Масштаб</h4><p>Вслепую сто метров кажутся бесконечными. Сняв повязку, видишь, как короток был путь. Расстояние, время и страх зависят от того, как мы смотрим.</p>
+</div></details><details><summary>Коммерческий потенциал</summary><div class="dbody">
+<h4>Самый простой в реализации</h4><p>Поручень на столбиках, мостки и повязки. Длину и маршрут легко подогнать под любой участок.</p>
+<h4>Инклюзивность</h4><p>Объект можно сделать вместе с организациями незрячих людей: они становятся гидами и экспертами. Это сильный социальный проект, который ценят и частные, и государственные заказчики.</p>
+<h4>Программы</h4><p>Тимбилдинги, школьные экскурсии, программы санаториев и ретритов.</p>
+<h4>Кому</h4><ul><li>парки и экотропы;</li><li>санатории и ретрит-центры;</li><li>отели и загородные клубы;</li><li>социальные и образовательные проекты.</li></ul>
+</div></details><details><summary>Как это построить</summary><div class="dbody"><table><tr><td>Длина</td><td>около 100 м</td></tr><tr><td>Поручень</td><td>чернёная сталь или кортен, высота около 90 см</td></tr><tr><td>Опоры</td><td>столбики на винтовых сваях</td></tr><tr><td>Покрытие</td><td>природное: хвоя, мох, песок; мостки из лиственницы</td></tr><tr><td>Старт</td><td>стойка с повязками</td></tr></table><ul style="margin-top:16px"><li>Маршрут проходит через разные типы леса: сухой и сырой.</li><li>Коридор тропы расчищают от валежника, через крупные стволы — мостки-переступы.</li><li>Перед открытием — осмотр арбориста: наклонённые и сухие деревья вдоль тропы.</li></ul></div></details></div></section>
+<footer class="w">Концепция арт-объекта для соснового бора, Тверская область. Иллюстрации схематичные, размеры и материалы уточняются с инженером.</footer>
+<script>
+(function(){
+  var rail=document.getElementById('rail'),L=rail.getTotalLength(),w=document.getElementById('walker'),h=document.getElementById('hole'),br=document.getElementById('blindRect'),btn=document.getElementById('blindBtn'),off=false;
+  var Z=[[12,'мягкая сухая хвоя, нога чуть проваливается','хруст собственных шагов, где-то далеко стучит дятел','запах смолы и нагретой хвои'],
+  [30,'пружинящий влажный мох, шаги становятся бесшумными','почти тишина, слышно только своё дыхание','прохлада и сырость, пахнет грибами'],
+  [45,'корни поперёк тропы, нога ищет опору, рука крепче держит поручень','шорох и хруст под ногами','запах земли'],
+  [58,'доски мостков, шаг гулкий, снизу тянет прохладой','вода журчит прямо под тобой','мокрое дерево и речная свежесть'],
+  [72,'сыпучий песок, шаг вязнет','ветер шумит в кронах высоко над головой','сухое тепло от нагретого песка'],
+  [92,'мягкая трава, тропа выходит на открытое место','жужжат насекомые, перекликаются птицы','солнце на лице, сразу становится тепло'],
+  [101,'тень и прохлада, поручень заканчивается','тишина','конец пути. Можно снимать повязку']];
+  function upd(){var v=+document.getElementById('tr').value,q=rail.getPointAtLength(L*v/100);w.setAttribute('cx',q.x);w.setAttribute('cy',q.y);h.setAttribute('cx',q.x);h.setAttribute('cy',q.y);
+    document.getElementById('trl').textContent=v+' м';var z=Z.find(function(z){return v<z[0]});
+    document.getElementById('sF').textContent=z[1];document.getElementById('sH').textContent=z[2];document.getElementById('sS').textContent=z[3]}
+  function setBlind(o){off=o;br.style.opacity=o?0:.9;btn.textContent=o?'Надеть повязку':'Снять повязку';btn.classList.toggle('on',o)}
+  document.getElementById('tr').addEventListener('input',upd);btn.addEventListener('click',function(){setBlind(!off)});upd();
+})();
+</script>
+<script>document.addEventListener('input',function(e){if(e.target.type=='range')document.body.classList.add('touched')});document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.tryit button'))document.body.classList.add('touched')});</script>
+</body>
+</html>
