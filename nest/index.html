@@ -120,6 +120,10 @@ body:not(.touched) .tryit .arr{animation:nudge 1.2s ease-in-out infinite}
 .gal img{display:block;width:100%;height:auto;filter:grayscale(.15)}
 .gal figcaption{line-height:1.1;font-size:15px;color:var(--mute);margin-top:8px}
 @media (max-width:820px){.gal{columns:1}}
+.vis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:16px}
+.vis figure{margin:0}.vis img{display:block;width:100%;height:auto}
+.vis figcaption{line-height:1.1;font-size:15px;color:var(--mute);margin-top:8px;max-width:60ch}
+.visnote{font-size:14px;color:var(--mute);margin:18px 0 0}
 .long{max-width:700px}
 .long h4{font-family:'HEAD';font-weight:400;font-size:18px;letter-spacing:-0.03em;color:var(--olive);margin:38px 0 12px;line-height:1.1}
 .long p{font-size:21px;line-height:1.22;margin:0 0 .8em;max-width:none}
